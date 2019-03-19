@@ -1,33 +1,70 @@
 @import "compass/reset";
 @import "compass/css3";
 
+
+/*Mixins*/
+@mixin property ($value){
+    -moz-transition-property: $value;
+    -o-transition-property: $value;
+    -webkit-transition-property: $value;
+    transition-property: $value;
+}
+
+@mixin delay ($value){
+    -moz-transition-delay: $value;
+    -o-transition-delay: $value;
+    -webkit-transition-delay: $value;
+    transition-delay: $value;
+}
+
+@mixin duration ($value){
+    -moz-transition-duration: $value;
+    -o-transition-duration: $value;
+    -webkit-transition-duration: $value;
+    transition-duration: $value;
+}
+@mixin timing-function ($value) {
+    -moz-transition-timing-function: $value;
+    -o-transition-timing-function: $value;
+    -webkit-transition-timing-function: $value;
+    transition-timing-function: $value;
+}
+
+/*Vererbungen*/
+%buttonBorder {
+    border: $border;
+    margin:$margin;
+}
+
+/*Variablen*/
+$green: #115718;
+$red: #d9534f;
+$yellow: #f0ad4e;
+$orange: #b8570f;
+$margin: 10px 5px 10px 5px;
+$border: 1px solid $black;
+
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
     font-family:'Open Sans', sans-serif;
 }
 
-/* dies ist ein kommentar */
 #main {
     width: 990px;
     margin:0 auto;
 }
 
-
 input[type="text"],input[type="password"] {
-    border:1px solid #000;
+    @extend %buttonBorder;
     padding:5px;
-    margin:10px 5px 10px 5px;
-
     width: 180px;
 }
 
 input[type="submit"] {
-    border:1px solid #000;
+    @extend %buttonBorder;
     border-radius:0;
     background-color:#fafafa;
-    margin:10px 5px 10px 5px;
     cursor:pointer;
 }
 
@@ -46,56 +83,39 @@ label {
 }
 
 .feedback {
-    margin:10px 5px 10px 5px;
+    margin:$margin;
     font-size:11px;
     font-weight:600;
 
-}
+    &.error {
+        color:$red;
+    }
+    &.warning {
+        color:$yellow;
+    }
 
-.feedback.error {
-    color:#d9534f;
-}
-
-.feedback.warning {
-    color:#f0ad4e;
-}
-
-.feedback.success {
-    color:#5cb85c;
+    &.success {
+        color:$green;
+    }
 }
 
 .strengthIndicator {
-    margin:10px 5px 10px 5px;
+    margin: $margin;
     width: 200px;
-    padding:5px;
+    padding: 5px;
     height: 13px;
-    border:1px solid #d3d3d3;
-}
+    border: 1px solid #d3d3d3;
 
-.strengthIndicator::before {
-    content: "";
-    display: block;
-    height: 100%;
+    &::before {
+        content: "";
+        display: block;
+        height: 100%;
 
-    -moz-transition-property: width;
-    -o-transition-property: width;
-    -webkit-transition-property: width;
-    transition-property: width;
-
-    -moz-transition-delay: 0;
-    -o-transition-delay: 0;
-    -webkit-transition-delay: 0;
-    transition-delay: 0;
-
-    -moz-transition-duration: 250ms;
-    -o-transition-duration: 250ms;
-    -webkit-transition-duration: 250ms;
-    transition-duration: 250ms;
-
-    -moz-transition-timing-function: linear;
-    -o-transition-timing-function: linear;
-    -webkit-transition-timing-function: linear;
-    transition-timing-function: linear;
+        @include property(width);
+        @include delay(0);
+        @include duration(250ms);
+        @include timing-function(linear);
+    }
 }
 
 .passwordWrapper::after {
@@ -107,17 +127,17 @@ label {
 
 .error .strengthIndicator::before {
     width: 10%;
-    background-color: #d9534f;
+    background-color: $red;
 }
 
 .warning .strengthIndicator::before {
     width: 60%;
-    background-color: #f0ad4e;
+    background-color: $yellow;
 }
 
 .success .strengthIndicator::before {
     width: 100%;
-    background-color: #5cb85c;
+    background-color: $green;
 }
 
 .feedback.error, .feedback.warning, .feedback.success {
@@ -135,4 +155,3 @@ label {
 .success .feedback.success {
     display: block;
 }
-

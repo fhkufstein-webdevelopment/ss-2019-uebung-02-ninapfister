@@ -30,128 +30,57 @@
     transition-timing-function: $value;
 }
 
-/*Vererbungen*/
-%buttonBorder {
-    border: $border;
-    margin:$margin;
-}
+.btn {
+    @include property(padding);
+    @include delay(0ms);
+    @include duration(3000ms);
+    @include timing-function(linear);
 
-/*Variablen*/
-$green: #115718;
-$red: #d9534f;
-$yellow: #f0ad4e;
-$orange: #b8570f;
-$margin: 10px 5px 10px 5px;
-$border: 1px solid $black;
-
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-family:'Open Sans', sans-serif;
-}
-
-#main {
-    width: 990px;
-    margin:0 auto;
-}
-
-input[type="text"],input[type="password"] {
-    @extend %buttonBorder;
-    padding:5px;
-    width: 180px;
-}
-
-input[type="submit"] {
-    @extend %buttonBorder;
-    border-radius:0;
-    background-color:#fafafa;
-    cursor:pointer;
-}
-
-label {
-    margin-left:5px;
-}
-
-.passwordField {
-    width:300px;
-    float:left;
-}
-
-.passwordFeedback {
-    width:250px;
-    float:left;
-}
-
-.feedback {
-    margin:$margin;
-    font-size:11px;
-    font-weight:600;
-
-    &.error {
-        color:$red;
+    &:first-child{
+        margin-top: 5em;
     }
-    &.warning {
-        color:$yellow;
+    &.ease-in {
+        @include timing-function(ease-in);
     }
 
-    &.success {
-        color:$green;
+    &.ease-out {
+        @include timing-function(ease-out);
+    }
+
+    &.ease-in-out {
+        @include timing-function(ease-in-out);
+    }
+
+    &.green {
+        @include property(all);
+
+    }
+
+    &.animation {
+        position: absolute;
+        left: 0;
+        top:0;
+        right: auto;
+        bottom:auto;
+        animation-timing-function: linear;
     }
 }
 
-.strengthIndicator {
-    margin: $margin;
-    width: 200px;
-    padding: 5px;
-    height: 13px;
-    border: 1px solid #d3d3d3;
-
-    &::before {
-        content: "";
-        display: block;
-        height: 100%;
-
-        @include property(width);
-        @include delay(0);
-        @include duration(250ms);
-        @include timing-function(linear);
-    }
+body:hover .animation {
+    animation-name:myanimation2;
+    animation-duration:5s;
 }
 
-.passwordWrapper::after {
-    content: "";
-    display: block;
-    clear: both;
-    float: none;
+@keyframes myanimation2 {
+    0% {left: 0; top: 0; right: auto; bottom: auto;}
+    25% {left: auto; top: 0; right: 0; bottom: auto;}
+    50% {left: auto; top: auto; right: 0; bottom: 0;}
+    75% {left: 0; top: auto; right: auto; bottom: 0;}
+    100% {left: 0; top: 0; right: auto; bottom: auto;}
+
 }
 
-.error .strengthIndicator::before {
-    width: 10%;
-    background-color: $red;
-}
-
-.warning .strengthIndicator::before {
-    width: 60%;
-    background-color: $yellow;
-}
-
-.success .strengthIndicator::before {
-    width: 100%;
-    background-color: $green;
-}
-
-.feedback.error, .feedback.warning, .feedback.success {
-    display: none;
-}
-
-.error .feedback.error {
-    display: block;
-}
-
-.warning .feedback.warning {
-    display: block;
-}
-
-.success .feedback.success {
-    display: block;
+.btn:hover {
+    padding-left: 25px;
+    padding-right: 25px;
 }
